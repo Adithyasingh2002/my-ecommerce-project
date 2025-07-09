@@ -1,0 +1,79 @@
+/* src/components/AddProduct.css */
+
+.add-product-background {
+  background-image: url("/assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+.add-product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.add-product-container {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.1); /* ✅ Transparent background */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+}
+
+.add-product-container h2 {
+  margin-bottom: 20px;
+}
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.add-product-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.15); /* ✅ Transparent input */
+  color: white;
+}
+
+.add-product-form input::placeholder {
+  color: #ddd;
+}
+
+.add-product-form button {
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-product-form button:hover {
+  background-color: #218838;
+}
+
+.error-msg {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.success-msg {
+  color: #90ee90;
+  font-weight: bold;
+}

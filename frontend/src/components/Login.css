@@ -1,0 +1,87 @@
+/* src/components/Login.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('../assets/bg.jpg'); /* optional here if not in index.css */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-box {
+  background: rgba(0, 0, 0, 0.6); /* Dark transparent */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px); /* Glass effect */
+  width: 320px;
+  text-align: center;
+  color: white;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.login-box input::placeholder {
+  color: #ddd;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+  background-color: #218838;
+}
+
+.register-link {
+  margin-top: 16px;
+  font-size: 14px;
+  color: white;
+}
+
+.register-link span {
+  margin-right: 5px;
+}
+
+.register-link a {
+  color: #66b3ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

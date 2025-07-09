@@ -1,0 +1,74 @@
+/* src/components/DeleteProduct.css */
+
+.delete-product-background {
+  background-image: url("/assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+.delete-product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.delete-product-container {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+}
+
+.delete-product-container h2 {
+  margin-bottom: 20px;
+}
+
+.delete-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.delete-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.delete-form input::placeholder {
+  color: #777;
+}
+
+.delete-form button {
+  padding: 12px;
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-form button:hover {
+  background-color: #b52a37;
+}
+
+.success-msg {
+  color: #90ee90;
+  font-weight: bold;
+}
+
+.error-msg {
+  color: #ff4d4f;
+  font-weight: bold;
+}
