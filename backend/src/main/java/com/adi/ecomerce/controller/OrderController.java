@@ -1,5 +1,6 @@
 package com.adi.ecomerce.controller;
 
+import com.adi.ecomerce.dto.OrderResponseDTO;
 import com.adi.ecomerce.entities.Order;
 import com.adi.ecomerce.entities.User;
 import com.adi.ecomerce.service.OrderService;
@@ -29,86 +30,100 @@ public class OrderController {
     @Autowired
     private UserRepository userRepository;
 
+    // ✅ Place a new order (User only)
     @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> placeOrder(@RequestBody Order order) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String email = authentication.getName(); // email is the principal (username)
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = userRepository.findFirstByEmail(email)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
-            Optional<User> optionalUser = userRepository.findFirstByEmail(email);
-            if (optionalUser.isEmpty()) {
-                logger.error("❌ User not found in database for email: {}", email);
-                return ResponseEntity.badRequest().body("User not found.");
-            }
-
-            User user = optionalUser.get();
-            order.setUser(user); // Attach authenticated user to order
-
-            logger.info("📦 Placing new order for user: {}", user.getEmail());
+            order.setUser(user);
             Order placedOrder = orderService.placeOrder(order);
-            logger.debug("✅ Order placed: {}", placedOrder);
             return ResponseEntity.ok(placedOrder);
-
         } catch (Exception e) {
             logger.error("❌ Failed to place order", e);
             return ResponseEntity.status(500).body("Error placing order: " + e.getMessage());
         }
     }
 
+    // ✅ Get current user's orders
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/user")
+    public ResponseEntity<List<OrderResponseDTO>> getOrdersForCurrentUser() {
+        try {
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = userRepository.findFirstByEmail(email)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found."));
+
+            List<OrderResponseDTO> userOrders = orderService.getOrderDTOsByUser(user);
+            return ResponseEntity.ok(userOrders);
+        } catch (Exception e) {
+            logger.error("❌ Failed to fetch user orders", e);
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    // ✅ Admin: Get all orders
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllOrders() {
         try {
-            logger.info("📋 Fetching all orders");
-            List<Order> orders = orderService.getAllOrders();
-            logger.debug("✅ Total orders found: {}", orders.size());
-            return ResponseEntity.ok(orders);
+            List<OrderResponseDTO> allOrders = orderService.getAllOrderDTOs();
+            return ResponseEntity.ok(allOrders);
         } catch (Exception e) {
             logger.error("❌ Failed to fetch orders", e);
             return ResponseEntity.status(500).body("Error retrieving orders: " + e.getMessage());
         }
     }
 
+    // ✅ Get specific order
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
-        logger.info("🔍 Fetching order with ID: {}", id);
-        Optional<Order> order = orderService.getOrderById(id);
-        return order.map(ResponseEntity::ok)
-                .orElseGet(() -> {
-                    logger.warn("⚠️ Order not found with ID: {}", id);
-                    return ResponseEntity.notFound().build();
-                });
+        try {
+            Optional<OrderResponseDTO> orderOpt = orderService.getOrderDTOById(id);
+            return orderOpt.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            logger.error("❌ Failed to fetch order by ID", e);
+            return ResponseEntity.status(500).body("Error retrieving order: " + e.getMessage());
+        }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // ✅ Cancel order (owner or admin)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
         try {
-            logger.info("❌ Cancelling order with ID: {}", id);
-            orderService.cancelOrder(id);
-            logger.debug("✅ Order cancelled: {}", id);
-            return ResponseEntity.noContent().build();
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
+            boolean isAdmin = auth.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+            Order cancelledOrder = orderService.cancelOrder(id, email, isAdmin);
+            return ResponseEntity.ok(cancelledOrder);
         } catch (EntityNotFoundException e) {
-            logger.warn("⚠️ Order not found to cancel, ID: {}", id);
             return ResponseEntity.notFound().build();
+        } catch (SecurityException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             logger.error("❌ Failed to cancel order", e);
             return ResponseEntity.status(500).body("Error cancelling order: " + e.getMessage());
         }
     }
 
+    // ✅ Delete order completely (Admin only)
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         try {
-            logger.info("🗑️ Permanently deleting order with ID: {}", id);
             orderService.deleteOrder(id);
-            logger.debug("✅ Order deleted: {}", id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
-            logger.warn("⚠️ Order not found to delete, ID: {}", id);
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             logger.error("❌ Failed to delete order", e);

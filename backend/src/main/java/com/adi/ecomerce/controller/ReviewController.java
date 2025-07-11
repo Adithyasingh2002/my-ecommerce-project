@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api")
 public class ReviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
@@ -21,7 +21,7 @@ public class ReviewController {
     private ReviewService reviewService;
 
     // ✅ POST review by a user for a product (roles: USER or ADMIN)
-    @PostMapping("/{userId}/{productId}")
+    @PostMapping("/reviews/{userId}/{productId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Review> createReview(
             @PathVariable Long userId,
@@ -35,7 +35,7 @@ public class ReviewController {
     }
 
     // ✅ GET all reviews for a product (public)
-    @GetMapping("/product/{productId}")
+    @GetMapping("/reviews/product/{productId}")
     public ResponseEntity<List<Review>> getReviewsForProduct(@PathVariable Long productId) {
         logger.info("Fetching reviews for product ID: {}", productId);
         List<Review> reviews = reviewService.getReviewsByProductId(productId);
@@ -43,8 +43,17 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
+    // ✅ GET all reviews (admin only) — this now matches the frontend call
+    @GetMapping("/admin/reviews")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Review>> getAllReviews() {
+        logger.info("Fetching all reviews (admin)");
+        List<Review> allReviews = reviewService.getAllReviews();
+        return ResponseEntity.ok(allReviews);
+    }
+
     // ✅ DELETE a review (admin only)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/reviews/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
         logger.info("Deleting review with ID: {}", id);

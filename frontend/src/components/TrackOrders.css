@@ -1,0 +1,145 @@
+.track-orders {
+  padding: 2rem;
+  color: #fff;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+.order-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-item {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.order-item ul {
+  margin-left: 1rem;
+  list-style-type: disc;
+}
+
+.order-buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 10px;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.cancel-btn:disabled,
+.cancel-btn.cancelled {
+  background-color: #888;
+  cursor: not-allowed;
+  font-style: italic;
+  color: #ccc;
+}
+
+/* Track Button */
+.track-btn {
+  background-color: #6f42c1;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.track-btn:hover {
+  background-color: #5936a6;
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+  background-color: #1f1f1f;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: #ffcb05;
+}
+
+.modal ul {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  list-style-type: disc;
+}
+
+/* Close Button */
+.close-btn {
+  margin-top: 1.5rem;
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: #d9363e;
+}
+
+/* Confirm Modal Buttons */
+.modal .cancel-btn,
+.modal .track-btn {
+  margin-top: 1rem;
+  min-width: 100px;
+}
+
+/* Extra animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

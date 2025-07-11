@@ -3,19 +3,23 @@ package com.adi.ecomerce.payload;
 public class AuthResponse {
     private String token;
     private String role;
+    private Long id; // ✅ Added user ID
     private String fullName;
     private String email;
     private String phoneNumber;
+    private String address;
 
     public AuthResponse() {
     }
 
-    public AuthResponse(String token, String role, String fullName, String email, String phoneNumber) {
+    public AuthResponse(String token, String role, Long id, String fullName, String email, String phoneNumber, String address) {
         this.token = token;
         this.role = role;
+        this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public String getToken() {
@@ -32,6 +36,14 @@ public class AuthResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -56,5 +68,13 @@ public class AuthResponse {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -6,23 +6,32 @@ import "./DeleteProduct.css";
 const DeleteProduct = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token"); // ✅ Get token directly
+  const role = user?.role; // ✅ Use correct role extraction
 
   useEffect(() => {
-    if (role !== "ADMIN") {
+    if (!user || role !== "ADMIN") {
       alert("Access denied");
       navigate("/");
     } else {
       fetchProducts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("/api/products");
+      const res = await axios.get("/api/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProducts(res.data);
     } catch (err) {
       console.error("❌ Failed to fetch products", err);
+      alert("Failed to fetch products");
     }
   };
 
@@ -31,7 +40,11 @@ const DeleteProduct = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`/api/products/${id}`);
+      await axios.delete(`/api/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProducts(products.filter((p) => p.id !== id));
       alert("🗑️ Product deleted successfully!");
     } catch (err) {
@@ -78,7 +91,12 @@ const DeleteProduct = () => {
               <img
                 src={product.imageUrl}
                 alt={product.name}
-                style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px" }}
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
               />
               <h3>{product.name}</h3>
               <p>₹{product.price}</p>

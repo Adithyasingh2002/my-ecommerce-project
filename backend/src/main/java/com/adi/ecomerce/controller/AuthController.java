@@ -17,8 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -46,7 +45,6 @@ public class AuthController {
         logger.info("🔑 Loaded admin.secret = {}", adminSecret);
     }
 
-    // ✅ LOGIN endpoint
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         logger.info("🔐 Login attempt for email: {}", request.getEmail());
@@ -59,19 +57,25 @@ public class AuthController {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = jwtUtil.generateToken(request.getEmail());
-
             User user = userService.getUserByEmail(request.getEmail());
-            String role = user.getRoles().iterator().next(); // assumes one role per user
+            Set<String> roles = user.getRoles();
+
+            String token = jwtUtil.generateToken(request.getEmail(), roles);
+            String role = roles.iterator().next();
 
             logger.info("✅ Login successful for user: {} with role {}", request.getEmail(), role);
+
+            // Updated response includes user ID
             AuthResponse authResponse = new AuthResponse(
                     token,
                     role,
+                    user.getId(), // ✅ Added ID
                     user.getFullName(),
                     user.getEmail(),
-                    user.getPhoneNumber()
+                    user.getPhoneNumber(),
+                    user.getAddress()
             );
+
             return ResponseEntity.ok(authResponse);
 
         } catch (BadCredentialsException e) {
@@ -83,7 +87,6 @@ public class AuthController {
         }
     }
 
-    // ✅ REGISTER endpoint
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         logger.info("📝 Registering user with email: {}", request.getEmail());
@@ -109,7 +112,7 @@ public class AuthController {
             if ("ADMIN".equalsIgnoreCase(request.getRole())) {
                 roles.add("ADMIN");
             } else {
-                roles.add("USER"); // Map CUSTOMER to USER
+                roles.add("USER");
             }
             user.setRoles(roles);
 

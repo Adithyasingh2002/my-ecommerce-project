@@ -1,12 +1,11 @@
 package com.adi.ecomerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
 
     @Id
@@ -14,16 +13,25 @@ public class Product {
     private Long id;
 
     private String name;
+
+    @Column(length = 1000)
     private String description;
+
     private Double price;
+
     private Integer quantity;
+
     private String category;
+
     private String imageUrl;
 
-    // 👉 Constructors
+    @Column(name = "is_active")
+    private Boolean isActive = true;  // ✅ Use wrapper Boolean to avoid null errors
+
     public Product() {}
 
-    public Product(Long id, String name, String description, Double price, Integer quantity, String category, String imageUrl) {
+    public Product(Long id, String name, String description, Double price,
+                   Integer quantity, String category, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,9 +39,10 @@ public class Product {
         this.quantity = quantity;
         this.category = category;
         this.imageUrl = imageUrl;
+        this.isActive = true; // Default to true
     }
 
-    // 👉 Getters & Setters
+    // Getters & Setters
 
     public Long getId() {
         return id;
@@ -89,5 +98,13 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 }

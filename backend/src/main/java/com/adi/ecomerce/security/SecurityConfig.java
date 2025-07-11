@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableMethodSecurity(prePostEnabled = true) // ✅ Enables @PreAuthorize, @PostAuthorize
+@EnableMethodSecurity(prePostEnabled = true) // Enables @PreAuthorize, @PostAuthorize
 public class SecurityConfig {
 
     @Autowired
@@ -25,12 +25,18 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                // Public endpoints
                 .requestMatchers(
-                    "/api/auth/**",               // Public endpoints
+                    "/api/auth/**",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html"
                 ).permitAll()
+
+                // Admin-only endpoints
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // All other endpoints require authentication
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex

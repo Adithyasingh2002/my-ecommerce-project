@@ -1,4 +1,3 @@
-// src/components/AdminDashboard.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +16,6 @@ const AdminDashboard = () => {
     >
       <h2>Welcome, Admin! 🚀</h2>
 
-      {/* View All Products */}
       <button
         onClick={() => navigate("/products")}
         style={buttonStyle("#0066cc")}
@@ -25,7 +23,6 @@ const AdminDashboard = () => {
         View All Products
       </button>
 
-      {/* Add New Product */}
       <button
         onClick={() => navigate("/add-product")}
         style={buttonStyle("#28a745")}
@@ -33,7 +30,6 @@ const AdminDashboard = () => {
         Add New Product
       </button>
 
-      {/* Delete Product */}
       <button
         onClick={() => navigate("/delete-product")}
         style={buttonStyle("#dc3545")}
@@ -41,12 +37,18 @@ const AdminDashboard = () => {
         Delete Product
       </button>
 
-      {/* View Orders */}
       <button
         onClick={() => navigate("/admin/orders")}
         style={buttonStyle("#ffc107", "black")}
       >
         📋 View Orders
+      </button>
+
+      <button
+        onClick={() => navigate("/admin/reviews")}
+        style={buttonStyle("#6c757d")}
+      >
+        📝 View Reviews
       </button>
     </div>
   );

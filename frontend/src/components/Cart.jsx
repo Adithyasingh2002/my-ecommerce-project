@@ -43,7 +43,9 @@ function Cart() {
 
   const handleOrder = async () => {
     const token = localStorage.getItem("token");
-    if (!token) {
+    const user = JSON.parse(localStorage.getItem("user")); // ✅ Get user from localStorage
+
+    if (!token || !user) {
       alert("❌ Please login first!");
       return;
     }
@@ -55,7 +57,8 @@ function Cart() {
 
     try {
       const payload = {
-        items: cart.map((item) => ({
+        user: { id: user.id }, // ✅ Add user ID
+        orderItems: cart.map((item) => ({
           product: { id: item.id },
           quantity: item.quantity,
         })),
@@ -81,7 +84,11 @@ function Cart() {
     <div className="cart-wrapper">
       <div className="cart-container">
         <h2>🛒 Your Cart</h2>
-        {message && <p style={{ color: message.includes("✅") ? "green" : "red" }}>{message}</p>}
+        {message && (
+          <p style={{ color: message.includes("✅") ? "green" : "red" }}>
+            {message}
+          </p>
+        )}
         {cart.length === 0 ? (
           <p>No items in cart.</p>
         ) : (
@@ -92,14 +99,23 @@ function Cart() {
                   <div className="item-details">
                     <h3>{item.name}</h3>
                     <div className="quantity-controls">
-                      <button onClick={() => decrementQuantity(item.id)}>➖</button>
+                      <button onClick={() => decrementQuantity(item.id)}>
+                        ➖
+                      </button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => incrementQuantity(item.id)}>➕</button>
+                      <button onClick={() => incrementQuantity(item.id)}>
+                        ➕
+                      </button>
                     </div>
                   </div>
                   <div className="item-price">
                     <p>₹{item.price * item.quantity}</p>
-                    <button className="delete-btn" onClick={() => deleteItem(item.id)}>🗑️</button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => deleteItem(item.id)}
+                    >
+                      🗑️
+                    </button>
                   </div>
                 </li>
               ))}

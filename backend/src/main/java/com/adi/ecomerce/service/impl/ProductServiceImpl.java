@@ -1,6 +1,8 @@
 package com.adi.ecomerce.service.impl;
 
+import com.adi.ecomerce.dao.OrderItemRepository;
 import com.adi.ecomerce.dao.ProductRepository;
+import com.adi.ecomerce.entities.OrderItem;
 import com.adi.ecomerce.entities.Product;
 import com.adi.ecomerce.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +20,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public Product saveProduct(Product product) {
@@ -60,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
         product.setQuantity(updatedProduct.getQuantity());
         product.setCategory(updatedProduct.getCategory());
         product.setImageUrl(updatedProduct.getImageUrl());
+        product.setIsActive(updatedProduct.getIsActive());
 
         Product updated = productRepository.save(product);
         logger.debug("Product updated: {}", updated);
@@ -70,6 +76,15 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         logger.info("Deleting product with ID: {}", id);
         Product product = getProductById(id);
+
+        // ✅ Step 1: Remove dependent order items
+        List<OrderItem> relatedOrderItems = orderItemRepository.findByProduct(product);
+        if (!relatedOrderItems.isEmpty()) {
+            orderItemRepository.deleteAll(relatedOrderItems);
+            logger.debug("Deleted {} order items related to product ID: {}", relatedOrderItems.size(), id);
+        }
+
+        // ✅ Step 2: Now delete the product
         productRepository.delete(product);
         logger.debug("Product deleted: {}", product);
     }

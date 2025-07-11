@@ -2,7 +2,6 @@ package com.adi.ecomerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -14,21 +13,19 @@ public class OrderItem {
     private Long id;
 
     private int quantity;
-
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"description", "quantity", "category", "imageUrl"}) // instead of @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"description", "quantity", "category", "imageUrl"})
     private Product product;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore // 🔥 breaks order → item → order → ... loop
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
-    // Constructors
-    public OrderItem() {
-    }
+    public OrderItem() {}
 
     public OrderItem(int quantity, double price, Product product, Order order) {
         this.quantity = quantity;
@@ -37,7 +34,6 @@ public class OrderItem {
         this.order = order;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

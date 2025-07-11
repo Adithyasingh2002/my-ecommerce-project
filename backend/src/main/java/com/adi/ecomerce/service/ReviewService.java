@@ -11,4 +11,7 @@ public interface ReviewService {
     List<Review> getReviewsByProductId(Long productId);
 
     void deleteReview(Long reviewId);
+
+    // ✅ NEW: Get all reviews (for admin panel)
+    List<Review> getAllReviews();
 }

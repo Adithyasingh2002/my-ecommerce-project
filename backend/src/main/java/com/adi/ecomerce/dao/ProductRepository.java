@@ -4,9 +4,16 @@ import com.adi.ecomerce.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // You can also add custom query methods here if needed, for example:
-    // List<Product> findByCategory(String category);
+    // ✅ Find all products by category (optional custom use)
+    List<Product> findByCategory(String category);
+
+    // ✅ Find products by name containing a keyword (case-insensitive search)
+    List<Product> findByNameContainingIgnoreCase(String keyword);
+
+  
 }

@@ -17,26 +17,49 @@ const Login = () => {
     try {
       const response = await axios.post("/api/auth/login", { email, password });
 
-      const { token, role, fullName, phoneNumber } = response.data;
+      const {
+        token,
+        id,
+        fullName,
+        email: returnedEmail,
+        phoneNumber,
+        address,
+        role,
+      } = response.data;
 
-      // Store token, role, and user info
+      if (!id || !role) {
+        setMessage("❌ Invalid user data returned from server.");
+        return;
+      }
+
+      // Save token and user info using consistent keys
       localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
       localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ fullName, email, phoneNumber, role })
+        "user",
+        JSON.stringify({
+          id,
+          fullName,
+          email: returnedEmail,
+          phoneNumber,
+          address,
+          role,
+        })
       );
 
       setMessage("✅ Login successful!");
 
+      // Navigate based on role
       if (role === "ADMIN") {
         navigate("/admin-dashboard");
       } else {
         navigate("/customer-dashboard");
       }
     } catch (err) {
+      console.error("Login failed:", err.response || err);
       const errorMessage =
-        err.response?.data || "❌ Login failed. Please try again.";
+        err.response?.data?.message ||
+        err.response?.data ||
+        "❌ Login failed. Please try again.";
       setMessage(errorMessage);
     }
   };
@@ -67,7 +90,12 @@ const Login = () => {
         </form>
 
         {message && (
-          <p style={{ color: message.includes("✅") ? "green" : "red", marginTop: "10px" }}>
+          <p
+            style={{
+              color: message.includes("✅") ? "green" : "red",
+              marginTop: "10px",
+            }}
+          >
             {message}
           </p>
         )}

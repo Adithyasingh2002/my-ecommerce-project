@@ -15,10 +15,14 @@ import DeleteProduct from "./components/DeleteProduct";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminOrders from "./components/AdminOrders";
-import Orders from "./components/Orders"; // ✅ Add this file
-import DeleteOrderPage from "./components/DeleteOrderPage"; // ✅ Add this file
+import Orders from "./components/Orders";
+import DeleteOrderPage from "./components/DeleteOrderPage";
 import CustomerOrders from "./components/CustomerOrders";
+import TrackOrders from "./components/TrackOrders";
 
+// ✅ New Review Components
+import CustomerReviewPage from "./components/CustomerReviewPage";
+import AdminReviewPage from "./components/AdminReviewPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -89,19 +93,52 @@ function AppWrapper() {
           }
         />
         <Route
-          path="/orders" // ✅ for cancel order (used by both roles)
+          path="/orders"
           element={
             <ProtectedRoute>
               <Orders />
             </ProtectedRoute>
           }
         />
-        <Route path="/orders" element={<CustomerOrders />} />
         <Route
-          path="/admin/orders/delete" // ✅ for delete order (admin only)
+          path="/customer-orders"
+          element={
+            <ProtectedRoute>
+              <CustomerOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/track-orders"
+          element={
+            <ProtectedRoute>
+              <TrackOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders/delete"
           element={
             <ProtectedRoute>
               <DeleteOrderPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ Review Routes */}
+        <Route
+          path="/customer/reviews"
+          element={
+            <ProtectedRoute>
+              <CustomerReviewPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/reviews"
+          element={
+            <ProtectedRoute>
+              <AdminReviewPage />
             </ProtectedRoute>
           }
         />

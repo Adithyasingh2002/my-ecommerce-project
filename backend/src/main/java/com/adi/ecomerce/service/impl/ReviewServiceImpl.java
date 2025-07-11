@@ -76,4 +76,11 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
         logger.debug("Review deleted with ID: {}", reviewId);
     }
+
+    // ✅ NEW: Get all reviews (admin)
+    @Override
+    public List<Review> getAllReviews() {
+        logger.info("Fetching all reviews");
+        return reviewRepository.findAll();
+    }
 }

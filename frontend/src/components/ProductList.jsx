@@ -1,4 +1,3 @@
-// src/components/ProductList.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import "./ProductList.css";
@@ -58,15 +57,15 @@ const ProductList = () => {
                   : `Available: ${product.quantity}`}
               </p>
 
-              {/* ✅ Keep Add to Cart for all users */}
-              <button
-                onClick={() => handleAddToCart(product)}
-                disabled={product.quantity === 0}
-              >
-                ➕ Add to Cart
-              </button>
-
-              {/* ❌ Removed delete button */}
+              {/* ✅ Show Add to Cart only if NOT admin */}
+              {role !== "ADMIN" && (
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  disabled={product.quantity === 0}
+                >
+                  ➕ Add to Cart
+                </button>
+              )}
             </div>
           ))}
         </div>
