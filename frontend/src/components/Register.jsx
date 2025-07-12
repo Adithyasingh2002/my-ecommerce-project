@@ -12,7 +12,7 @@ function Register() {
     address: "",
     phoneNumber: "",
     role: "CUSTOMER",
-    adminSecret: "", // 👈 Will be sent to backend
+    adminSecret: "", //  Will be sent to backend
   });
 
   const [error, setError] = useState("");
@@ -27,7 +27,7 @@ function Register() {
     e.preventDefault();
     setError("");
 
-    // ✅ Optional frontend check
+    //  Optional frontend check
     if (formData.role === "ADMIN" && formData.adminSecret !== ADMIN_SECRET) {
       setError("❌ Invalid Admin Password.");
       return;

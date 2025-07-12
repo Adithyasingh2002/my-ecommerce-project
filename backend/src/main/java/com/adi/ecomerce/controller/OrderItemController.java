@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -20,7 +19,7 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
-    // 🔒 ADMIN only
+    //  ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<OrderItem>> getAllOrderItems() {
@@ -30,7 +29,7 @@ public class OrderItemController {
         return ResponseEntity.ok(items);
     }
 
-    // 🔓 ADMIN and USER
+    //  ADMIN and USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/order/{orderId}")
     public ResponseEntity<List<OrderItem>> getItemsByOrderId(@PathVariable Long orderId) {
@@ -40,7 +39,7 @@ public class OrderItemController {
         return ResponseEntity.ok(items);
     }
 
-    // 🔓 ADMIN and USER
+    //  ADMIN and USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) {
@@ -56,7 +55,7 @@ public class OrderItemController {
                 });
     }
 
-    // 🔒 ADMIN only
+    //  ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<OrderItem> createOrderItem(@RequestBody OrderItem orderItem) {
@@ -66,7 +65,7 @@ public class OrderItemController {
         return ResponseEntity.ok(created);
     }
 
-    // 🔒 ADMIN only
+    //  ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem orderItem) {
@@ -76,7 +75,7 @@ public class OrderItemController {
         return ResponseEntity.ok(updated);
     }
 
-    // 🔒 ADMIN only
+    //  ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable Long id) {

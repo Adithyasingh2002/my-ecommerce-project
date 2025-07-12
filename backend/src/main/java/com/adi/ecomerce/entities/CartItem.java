@@ -1,7 +1,6 @@
 package com.adi.ecomerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -12,20 +11,12 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Cart cart;
-
     @ManyToOne
     private Product product;
-
     private Integer quantity;
-
-    // Constructors
     public CartItem() {}
-
-    // Getters & Setters
-
     public Long getId() {
         return id;
     }

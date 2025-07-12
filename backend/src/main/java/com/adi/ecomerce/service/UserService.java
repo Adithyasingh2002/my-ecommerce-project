@@ -1,7 +1,6 @@
 package com.adi.ecomerce.service;
 
 import com.adi.ecomerce.entities.User;
-
 import java.util.List;
 
 public interface UserService {
@@ -10,9 +9,9 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(Long id); // fixed
+    User getUserById(Long id);
 
-    User getUserByEmail(String email); // fixed
+    User getUserByEmail(String email); 
 
     User updateUser(Long id, User user);
 

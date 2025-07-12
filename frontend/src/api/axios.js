@@ -1,8 +1,6 @@
-// src/api/axios.js
 import axios from "axios";
-
 const instance = axios.create({
-  baseURL: "http://localhost:8090", // ✅ backend port
+  baseURL: "http://localhost:8090", //  backend port
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -10,8 +8,7 @@ const instance = axios.create({
   timeout: 10000,
   withCredentials: false,
 });
-
-// ✅ Attach token from localStorage
+//  Attach token from localStorage
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -22,8 +19,7 @@ instance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
-// ✅ Global error logging
+//  Global error logging
 instance.interceptors.response.use(
   (response) => response,
   (error) => {

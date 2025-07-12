@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
         logger.debug("Review deleted with ID: {}", reviewId);
     }
 
-    // ✅ NEW: Get all reviews (admin)
+    // Get all reviews (admin)
     @Override
     public List<Review> getAllReviews() {
         logger.info("Fetching all reviews");

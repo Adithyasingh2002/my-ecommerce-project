@@ -20,7 +20,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    // ✅ POST review by a user for a product (roles: USER or ADMIN)
+    //  POST review by a user for a product (roles: USER or ADMIN)
     @PostMapping("/reviews/{userId}/{productId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Review> createReview(
@@ -34,7 +34,7 @@ public class ReviewController {
         return ResponseEntity.ok(createdReview);
     }
 
-    // ✅ GET all reviews for a product (public)
+    //  GET all reviews for a product (public)
     @GetMapping("/reviews/product/{productId}")
     public ResponseEntity<List<Review>> getReviewsForProduct(@PathVariable Long productId) {
         logger.info("Fetching reviews for product ID: {}", productId);
@@ -43,7 +43,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
-    // ✅ GET all reviews (admin only) — this now matches the frontend call
+    //  GET all reviews (admin only) 
     @GetMapping("/admin/reviews")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Review>> getAllReviews() {
@@ -52,7 +52,7 @@ public class ReviewController {
         return ResponseEntity.ok(allReviews);
     }
 
-    // ✅ DELETE a review (admin only)
+    //  DELETE a review (admin only)
     @DeleteMapping("/admin/reviews/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {

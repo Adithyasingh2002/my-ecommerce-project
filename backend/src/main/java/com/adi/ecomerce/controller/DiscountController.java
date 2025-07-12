@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class DiscountController {
     @Autowired
     private DiscountService discountService;
 
-    // ✅ Create discount - ADMIN only
+    //  Create discount - ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Discount> create(@RequestBody Discount discount) {
@@ -32,7 +31,7 @@ public class DiscountController {
         return ResponseEntity.ok(createdDiscount);
     }
 
-    // ✅ Get all discounts - ADMIN and USER
+    //  Get all discounts - ADMIN and USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<List<Discount>> getAll() {
@@ -42,7 +41,7 @@ public class DiscountController {
         return ResponseEntity.ok(discounts);
     }
 
-    // ✅ Get discount by ID - ADMIN and USER
+    //  Get discount by ID - ADMIN and USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<Discount> getById(@PathVariable Long id) {
@@ -57,7 +56,7 @@ public class DiscountController {
         }
     }
 
-    // ✅ Get discount by code - ADMIN and USER
+    //  Get discount by code - ADMIN and USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/code/{code}")
     public ResponseEntity<Discount> getByCode(@PathVariable String code) {
@@ -72,7 +71,7 @@ public class DiscountController {
         }
     }
 
-    // ✅ Update discount - ADMIN only
+    //  Update discount - ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Discount> update(@PathVariable Long id, @RequestBody Discount discount) {
@@ -87,7 +86,7 @@ public class DiscountController {
         }
     }
 
-    // ✅ Delete discount - ADMIN only
+    //  Delete discount - ADMIN only
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

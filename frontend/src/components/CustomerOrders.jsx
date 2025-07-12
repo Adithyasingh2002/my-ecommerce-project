@@ -1,4 +1,3 @@
-// src/components/CustomerOrders.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 

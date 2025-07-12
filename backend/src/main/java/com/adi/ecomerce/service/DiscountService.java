@@ -1,7 +1,6 @@
 package com.adi.ecomerce.service;
 
 import com.adi.ecomerce.entities.Discount;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -77,14 +76,14 @@ public class ProductServiceImpl implements ProductService {
         logger.info("Deleting product with ID: {}", id);
         Product product = getProductById(id);
 
-        // ✅ Step 1: Remove dependent order items
+        //  Remove dependent order items
         List<OrderItem> relatedOrderItems = orderItemRepository.findByProduct(product);
         if (!relatedOrderItems.isEmpty()) {
             orderItemRepository.deleteAll(relatedOrderItems);
             logger.debug("Deleted {} order items related to product ID: {}", relatedOrderItems.size(), id);
         }
 
-        // ✅ Step 2: Now delete the product
+        // delete the product
         productRepository.delete(product);
         logger.debug("Product deleted: {}", product);
     }

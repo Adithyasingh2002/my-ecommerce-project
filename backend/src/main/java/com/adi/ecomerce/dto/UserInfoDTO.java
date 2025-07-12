@@ -7,9 +7,8 @@ public class UserInfoDTO {
     private String email;
     private String phoneNumber;
     private String address;
-    private String role; // should be a string
-
-    // Getters and Setters
+    private String role; 
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

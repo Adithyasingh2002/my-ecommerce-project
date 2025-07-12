@@ -8,8 +8,8 @@ const DeleteProduct = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token"); // ✅ Get token directly
-  const role = user?.role; // ✅ Use correct role extraction
+  const token = localStorage.getItem("token"); // Get token directly
+  const role = user?.role; // Use correct role extraction
 
   useEffect(() => {
     if (!user || role !== "ADMIN") {
@@ -18,7 +18,7 @@ const DeleteProduct = () => {
     } else {
       fetchProducts();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   const fetchProducts = async () => {

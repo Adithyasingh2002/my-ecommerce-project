@@ -78,7 +78,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 logger.warn("Invalid JWT token for user: {}", username);
             }
         }
-
         // 3. Continue filter chain
         filterChain.doFilter(request, response);
     }

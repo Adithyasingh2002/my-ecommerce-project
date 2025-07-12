@@ -1,7 +1,6 @@
 package com.adi.ecomerce.service;
 
 import com.adi.ecomerce.entities.Product;
-
 import java.util.List;
 
 public interface ProductService {
@@ -10,7 +9,7 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
-    Product getProductById(Long id);  // ✅ fixed
+    Product getProductById(Long id); 
 
     Product updateProduct(Long id, Product product);
 

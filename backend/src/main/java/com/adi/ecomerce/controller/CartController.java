@@ -15,19 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
-
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-
     @Autowired
     private CartService cartService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ProductService productService;
 
-    // ✅ GET cart by user ID
+    //  GET cart by user ID
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{userId}")
     public Cart getCart(@PathVariable Long userId) {
@@ -38,7 +34,7 @@ public class CartController {
         return cart;
     }
 
-    // ✅ ADD product to cart
+    //  ADD product to cart
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping("/add")
     public Cart addToCart(@RequestParam Long userId,
@@ -52,7 +48,7 @@ public class CartController {
         return cart;
     }
 
-    // ✅ REMOVE product from cart
+    //  REMOVE product from cart
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/remove")
     public Cart removeFromCart(@RequestParam Long userId,
@@ -64,7 +60,7 @@ public class CartController {
         return cart;
     }
 
-    // ✅ CLEAR cart
+    //  CLEAR cart
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/clear")
     public Cart clearCart(@RequestParam Long userId) {

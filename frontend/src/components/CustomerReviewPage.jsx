@@ -1,4 +1,3 @@
-// src/components/CustomerReviewPage.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -7,7 +6,6 @@ const CustomerReviewPage = () => {
   const [reviews, setReviews] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Correct key used: 'user'
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
@@ -33,7 +31,7 @@ const CustomerReviewPage = () => {
     if (user?.id && token) {
       fetchOrders();
     } else {
-      setLoading(false); // even if not logged in, stop showing loading spinner
+      setLoading(false); 
     }
   }, [user?.id, token]);
 

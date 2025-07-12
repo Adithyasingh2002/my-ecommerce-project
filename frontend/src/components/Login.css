@@ -1,10 +1,8 @@
-/* src/components/Login.css */
-
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-image: url('../assets/bg.jpg'); /* optional here if not in index.css */
+  background-image: url('../assets/bg.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

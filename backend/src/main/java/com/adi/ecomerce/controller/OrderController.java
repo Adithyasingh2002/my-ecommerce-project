@@ -30,7 +30,7 @@ public class OrderController {
     @Autowired
     private UserRepository userRepository;
 
-    // ✅ Place a new order (User only)
+    //  Place a new order (User only)
     @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> placeOrder(@RequestBody Order order) {
@@ -48,7 +48,7 @@ public class OrderController {
         }
     }
 
-    // ✅ Get current user's orders
+    //  Get current user's orders
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public ResponseEntity<List<OrderResponseDTO>> getOrdersForCurrentUser() {
@@ -65,7 +65,7 @@ public class OrderController {
         }
     }
 
-    // ✅ Admin: Get all orders
+    //  Admin: Get all orders
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllOrders() {
@@ -78,7 +78,7 @@ public class OrderController {
         }
     }
 
-    // ✅ Get specific order
+    //  Get specific order
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
@@ -92,7 +92,7 @@ public class OrderController {
         }
     }
 
-    // ✅ Cancel order (owner or admin)
+    //  Cancel order (owner or admin)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
@@ -116,7 +116,7 @@ public class OrderController {
         }
     }
 
-    // ✅ Delete order completely (Admin only)
+    //  Delete order completely (Admin only)
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {

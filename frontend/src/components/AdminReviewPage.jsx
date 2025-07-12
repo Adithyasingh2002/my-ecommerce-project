@@ -1,4 +1,3 @@
-// src/components/AdminReviewPage.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -61,6 +60,7 @@ const AdminReviewPage = () => {
             <p><strong>Product:</strong> {review.product?.name || "N/A"}</p>
             <p><strong>User:</strong> {review.user?.fullName || "N/A"}</p>
             <p><strong>Comment:</strong> {review.comment}</p>
+            <p><strong>Rating:</strong> {review.rating ?? "N/A"} ⭐</p>
             <p><strong>Date:</strong> {new Date(review.createdAt).toLocaleString()}</p>
             <button
               style={{

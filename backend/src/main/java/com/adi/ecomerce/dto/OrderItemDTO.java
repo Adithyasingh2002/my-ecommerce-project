@@ -9,7 +9,7 @@ public class OrderItemDTO {
 
     public OrderItemDTO() {}
 
-    // ✅ Full constructor
+    //  Full constructor
     public OrderItemDTO(Long id, Long productId, String productName, Double price, int quantity) {
         this.id = id;
         this.productId = productId;
@@ -17,8 +17,6 @@ public class OrderItemDTO {
         this.price = price;
         this.quantity = quantity;
     }
-
-    // Getters and setters
     public Long getId() {
         return id;
     }

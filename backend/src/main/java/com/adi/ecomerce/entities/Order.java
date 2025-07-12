@@ -15,23 +15,16 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime orderDate = LocalDateTime.now();
-
     private Double totalAmount = 0.0;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.PENDING;
-
     private boolean cancelled = false;
-
     private LocalDateTime cancelledAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"password", "roles", "orders"})
     private User user;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("order")
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -44,10 +37,7 @@ public class Order {
         this.status = status != null ? status : OrderStatus.PENDING;
         this.user = user;
     }
-
-    /**
-     * Calculates total amount from order items.
-     */
+      //Calculates total amount from order items.
     public void calculateTotalAmount() {
         if (orderItems != null && !orderItems.isEmpty()) {
             this.totalAmount = orderItems.stream()
@@ -57,7 +47,6 @@ public class Order {
             this.totalAmount = 0.0;
         }
     }
-
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

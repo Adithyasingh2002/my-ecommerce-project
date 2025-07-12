@@ -31,8 +31,6 @@ public class OrderResponseDTO {
         this.cancelledAt = cancelledAt;
         this.cancelled = cancelled;
     }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }

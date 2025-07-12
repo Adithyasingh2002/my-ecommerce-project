@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // ✅ Allow registration if needed (or make admin-only)
+    //  Allow registration if needed (or make admin-only)
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         logger.info("Creating new user: {}", user.getEmail());
@@ -33,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok(createdUser);
     }
 
-    // ✅ Only allow ADMIN to fetch all users
+    //  Only allow ADMIN to fetch all users
     @GetMapping
     public ResponseEntity<?> getAllUsers(Authentication authentication) {
         boolean isAdmin = authentication.getAuthorities().stream()
@@ -49,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    // ✅ Allow user to fetch only their own user data unless admin
+    //  Allow user to fetch only their own user data unless admin
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id, Principal principal, Authentication authentication) {
         try {
@@ -69,7 +68,7 @@ public class UserController {
         }
     }
 
-    // ✅ Allow update only if admin or same user
+    //  Allow update only if admin or same user
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User userUpdate,
                                         Principal principal, Authentication authentication) {
@@ -91,7 +90,7 @@ public class UserController {
         }
     }
 
-    // ✅ Allow delete only if admin or same user
+    //  Allow delete only if admin or same user
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id, Principal principal, Authentication authentication) {
         try {

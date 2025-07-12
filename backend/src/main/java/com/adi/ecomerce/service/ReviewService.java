@@ -1,7 +1,6 @@
 package com.adi.ecomerce.service;
 
 import com.adi.ecomerce.entities.Review;
-
 import java.util.List;
 
 public interface ReviewService {
@@ -12,6 +11,6 @@ public interface ReviewService {
 
     void deleteReview(Long reviewId);
 
-    // ✅ NEW: Get all reviews (for admin panel)
+    //  Get all reviews (for admin panel)
     List<Review> getAllReviews();
 }

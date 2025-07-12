@@ -1,4 +1,3 @@
-// src/components/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 
@@ -7,7 +6,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("/api/user/profile") // or /api/users/me — based on your backend
+      .get("/api/user/profile") 
       .then((res) => setUser(res.data))
       .catch((err) => console.error("❌ Unauthorized", err));
   }, []);
